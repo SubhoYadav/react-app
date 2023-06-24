@@ -1,14 +1,11 @@
-
+import React from "react";
+import { Board } from "./components/Board";
 function App() {
-
-
   return (
-    <>
-      <h1>Fresh react app</h1>
-    </>
-  )
+    <div className="app">
+      <Board />
+    </div>
+  );
 }
 
-export default App
-
-
+export default App;
