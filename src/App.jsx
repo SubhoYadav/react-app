@@ -2,15 +2,22 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 function App() {
   const [plang, setPLang] = useState([]);
-  const getProgrammingLanguages = async () => {
+  const [dataCount, setDataCount] = useState(16);
+  const [currPage, setCurrPage] = useState(1);
+
+  const getProgrammingLanguages = async (page = 1) => {
     const programmingLanguages = await axios.get(
-      "http://localhost:8089/db/programminglanguages"
+      `http://localhost:8089/db/programminglanguages/${page}`
     );
     console.log({ programmingLanguages });
     if (programmingLanguages.data.resp_status) {
       setPLang(programmingLanguages.data.resp_data.data);
     }
   };
+  function fetchData(page) {
+    setCurrPage(page);
+    getProgrammingLanguages(page);
+  }
   useEffect(() => {
     getProgrammingLanguages();
   }, []);
@@ -42,6 +49,43 @@ function App() {
           })}
         </tbody>
       </table>
+      <nav aria-label="...">
+        <ul className="pagination">
+          <li
+            className="page-item disabled"
+            onClick={() => {
+              currPage > 1 && fetchData(currPage - 1);
+            }}
+          >
+            <a className="page-link" href="#" tabIndex="-1">
+              Previous
+            </a>
+          </li>
+          {new Array(Math.ceil(dataCount / 4)).fill(null).map((_, index) => {
+            return (
+              <li
+                className={`page-item ${currPage == index + 1 && "active"}`}
+                onClick={() => fetchData(index + 1)}
+                key={index}
+              >
+                <a className="page-link" href="#">
+                  {index + 1}
+                </a>
+              </li>
+            );
+          })}
+          <li
+            className="page-item"
+            onClick={() => {
+              currPage < Math.ceil(dataCount / 4) && fetchData(currPage + 1);
+            }}
+          >
+            <a className="page-link" href="#">
+              Next
+            </a>
+          </li>
+        </ul>
+      </nav>
     </>
   );
 }
