@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 function App() {
   const [plang, setPLang] = useState([]);
-  const [dataCount, setDataCount] = useState(16);
+  const [dataCount, _] = useState(16);
   const [currPage, setCurrPage] = useState(1);
 
-  const getProgrammingLanguages = async (page = 1) => {
+  async function fetchData(page = 1) {
     const programmingLanguages = await axios.get(
       `http://localhost:8089/db/programminglanguages/${page}`
     );
@@ -13,14 +13,10 @@ function App() {
     if (programmingLanguages.data.resp_status) {
       setPLang(programmingLanguages.data.resp_data.data);
     }
-  };
-  function fetchData(page) {
-    setCurrPage(page);
-    getProgrammingLanguages(page);
   }
   useEffect(() => {
-    getProgrammingLanguages();
-  }, []);
+    fetchData(currPage);
+  }, [currPage]);
   return (
     <>
       <table className="table">
@@ -54,7 +50,7 @@ function App() {
           <li
             className="page-item disabled"
             onClick={() => {
-              currPage > 1 && fetchData(currPage - 1);
+              currPage > 1 && setCurrPage(currPage - 1);
             }}
           >
             <a className="page-link" href="#" tabIndex="-1">
@@ -65,7 +61,7 @@ function App() {
             return (
               <li
                 className={`page-item ${currPage == index + 1 && "active"}`}
-                onClick={() => fetchData(index + 1)}
+                onClick={() => setCurrPage(index + 1)}
                 key={index}
               >
                 <a className="page-link" href="#">
@@ -77,7 +73,7 @@ function App() {
           <li
             className="page-item"
             onClick={() => {
-              currPage < Math.ceil(dataCount / 4) && fetchData(currPage + 1);
+              currPage < Math.ceil(dataCount / 4) && setCurrPage(currPage + 1);
             }}
           >
             <a className="page-link" href="#">
