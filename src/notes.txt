@@ -1,0 +1,4 @@
+Install jest and necessary packages using the following command:
+npm install --save-dev jest babel-jest @babel/preset-env @babel/preset-react react-test-renderer
+
+To enable jest watch for the fies use npx jest --watch
