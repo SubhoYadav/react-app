@@ -1,10 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 function App() {
   const [plang, setPLang] = useState([]);
   const [dataCount, _] = useState(16);
   const [currPage, setCurrPage] = useState(1);
 
+  const uploadCsv = async (event) => {
+    event.preventDefault();
+    console.log("Event.target.value", event.target.value);
+    const payload = new FormData();
+    payload.append("file", event.target);
+    const uploadResponse = await axios.post(
+      "http://localhost:8089/csv/upload",
+      payload
+    );
+    console.log({ uploadResponse });
+  };
   async function fetchData(page = 1) {
     const programmingLanguages = await axios.get(
       `http://localhost:8089/db/programminglanguages/${page}`
@@ -82,6 +93,22 @@ function App() {
           </li>
         </ul>
       </nav>
+      <form className="mb-3" onSubmit={uploadCsv}>
+        <label htmlFor="formFile" className="form-label">
+          Provide a csv file
+        </label>
+        <input
+          className="form-control"
+          type="file"
+          id="formFile"
+          name="csv"
+        />
+        <input
+          className="btn btn-sm btn-success mt-2"
+          type="submit"
+          value="Upload"
+        />
+      </form>
     </>
   );
 }
