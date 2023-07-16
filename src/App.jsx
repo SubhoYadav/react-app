@@ -1,14 +1,5 @@
-
 function App() {
-
-
-  return (
-    <>
-      <h1>Fresh react app</h1>
-    </>
-  )
+  return <p className="">Thank God !</p>;
 }
 
-export default App
-
-
+export default App;

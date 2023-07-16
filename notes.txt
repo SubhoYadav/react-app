@@ -1,0 +1,4 @@
+Setup instructions for tailwind css in vite: 
+
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
