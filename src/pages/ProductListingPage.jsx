@@ -10,7 +10,6 @@ import useProducts from "../zustland/products";
 import Products from "../components /Products";
 
 function ProductListingPage() {
-  const api = "https://fakestoreapi.com/products";
   // const setPdts = useProducts((state) => state.setProducts);
 
   // const loadPdts = useProducts((state) => state.loadPdts);
@@ -31,14 +30,6 @@ function ProductListingPage() {
     };
   });
   const { loading, loadPdts } = storeData;
-  const getProducts = async () => {
-    try {
-      const response = await axios.get(api);
-      setPdts(response.data);
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
 
   useEffect(() => {
     // getProducts();

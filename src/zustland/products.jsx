@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import axios from "axios";
+import { getProducts, getProductById } from "../services/products";
+
 const useProducts = create((set, get) => ({
   products: [],
   product: null,
@@ -11,16 +12,23 @@ const useProducts = create((set, get) => ({
       };
     }),
   loadPdts: async () => {
-    set({ loading: true });
-    const api = "https://fakestoreapi.com/products";
-    const response = await axios.get(api);
-    set({ products: response.data, loading: false });
+    let storeData = get();
+    if (storeData.products.length < 1) {
+      set({ loading: true });
+      const response = await getProducts();
+      set({ products: response.data, loading: false });
+    }
   },
-  getPdtsById: (id) => {
-    let product = get();
-    console.log("What the get function returns, ", product);
-    product = product.products.find((p) => p.id == id);
-    set({ product });
+  getPdtsById: async (id) => {
+    let storeData = get();
+
+    if (storeData.products.length) {
+      let product = storeData.products.find((p) => p.id == id);
+      set({ product });
+    } else {
+      const response = await getProductById(id);
+      set({ product: response.data });
+    }
   },
 }));
 
