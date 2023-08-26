@@ -1,0 +1,11 @@
+.level-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.level-meter {
+  width: 215px;
+  background-color: rgb(233, 203, 203);
+  border-radius: 20px;
+  margin: 8px 10px;
+}

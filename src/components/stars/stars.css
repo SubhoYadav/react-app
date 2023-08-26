@@ -1,0 +1,11 @@
+.stars {
+  padding: 20px;
+  background-color: #cbd8e9e7;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+i {
+  margin-right: 10px;
+  font-size: 35px;
+}

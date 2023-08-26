@@ -1,14 +1,28 @@
-
+import Stars from "./components/stars/Stars";
+import Level from "./components/level/Level";
 function App() {
-
-
   return (
-    <>
-      <h1>Fresh react app</h1>
-    </>
-  )
+    <div className="main">
+      <div className="card">
+        <div className="review">
+          <h5 style={{ fontSize: "25px" }}>Customer Review</h5>
+          <Stars />
+          <small>40 customer ratings</small>
+        </div>
+        <div className="analysis">
+          {new Array(5).fill(null).map((e, index) => {
+            return (
+              <p>
+                <Level num={index} />
+              </p>
+            );
+          })}
+
+          <small>How do we calculate ratings </small>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default App
-
-
+export default App;
