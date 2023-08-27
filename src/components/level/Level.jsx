@@ -5,7 +5,7 @@ export default function Level(props) {
   return (
     <div className="level-container">
       <p style={{ color: "blue" }}>{props.num + 1} start</p>
-      <div className="level-meter">x</div>
+      <p className="level-meter">x</p>
       <p>85 %</p>
     </div>
   );

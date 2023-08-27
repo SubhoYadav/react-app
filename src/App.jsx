@@ -12,7 +12,7 @@ function App() {
         <div className="analysis">
           {new Array(5).fill(null).map((e, index) => {
             return (
-              <p>
+              <p key={index}>
                 <Level num={index} />
               </p>
             );

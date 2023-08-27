@@ -5,13 +5,13 @@ export default function Stars() {
   const master = ["*", "*", "*", "*", "*", "-", "-", "-", "-", "-"];
   const [rating, setRating] = useState([]);
   const [rate, setRate] = useState(0);
+  const [finalRate, setFinalRate] = useState(0);
 
-  const handleRating = (eventObj) => {
+  const handleRating = () => {
     // First argument is always the event object
     let start, end;
     start = 5 - rate;
     end = start + 5;
-    console.log({ start, end });
     setRating(master.slice(start, end));
   };
 
@@ -20,31 +20,32 @@ export default function Stars() {
   }
   useEffect(handleRating, [rate]);
 
+  useEffect(() => {
+    console.log({ finalRate });
+  }, [finalRate]);
+
   return (
     <div className="stars">
       {rating.map((star, index) => {
-        if (star == "*") {
-          return (
-            <i
-              className="ri-star-fill"
-              key={index}
-              onMouseOver={() => handleMouseOver(index + 1)}
-            ></i>
-          );
-        } else {
-          return (
-            <i
-              className="ri-star-line"
-              key={index}
-              onMouseOver={() => handleMouseOver(index + 1)}
-            ></i>
-          );
-        }
+        return (
+          <i
+            className={star == "*" ? "ri-star-fill" : "ri-star-line"}
+            key={index}
+            onMouseOver={() => {
+              handleMouseOver(index + 1);
+            }}
+            onMouseLeave={() => {
+              if (!finalRate) {
+                setRate(0);
+              }
+            }}
+            onClick={() => {
+              setFinalRate(index + 1);
+            }}
+          ></i>
+        );
       })}
       <br />
-      <button style={{ margin: "10px" }} onClick={() => setRate(3)}>
-        Give rating !
-      </button>
     </div>
   );
 }
