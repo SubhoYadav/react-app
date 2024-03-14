@@ -1,14 +1,11 @@
+import TodoList from "./features/todos/TodoList";
 
 function App() {
-
-
   return (
     <>
-      <h1>Fresh react app</h1>
+      <TodoList />
     </>
-  )
+  );
 }
 
-export default App
-
-
+export default App;
